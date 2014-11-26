@@ -38,16 +38,18 @@ public class SensorDataService extends Service implements SensorEventListener {
         switch (type) {
             case Sensor.TYPE_ACCELEROMETER: {
                 Log.d(LOG_TEXT, "Accelerometer values " + Double.toString(vals[0]) + " " + Double.toString(vals[1]) + " " + Double.toString(vals[2]));
+                Log.d(LOG_TEXT, "Accelerator Power " + Double.toString(accelerometer.getPower()));
             }
 
             case Sensor.TYPE_GYROSCOPE: {
                 Log.d(LOG_TEXT, "Gyropscope values " + Double.toString(vals[0]) + " " + Double.toString(vals[1]) + " " + Double.toString(vals[2]));
+                Log.d(LOG_TEXT, "Gyroscope Power " + Double.toString(gyroscope.getPower()));
 
             }
         }
 
         try {
-            Thread.sleep((int)samplingFrequency * 1000);
+            Thread.sleep((int)samplingFrequency * 100);
         }
         catch(InterruptedException e)
         {
@@ -61,14 +63,10 @@ public class SensorDataService extends Service implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
 
     public SensorDataService() {
-
-
     }
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

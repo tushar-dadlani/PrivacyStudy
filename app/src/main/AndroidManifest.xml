@@ -9,6 +9,8 @@
         android:theme="@style/AppTheme" >
 
         <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+        <uses-permission android:name="android.permission.INTERNET"/>
+
         <activity
             android:name=".PrivacyMain"
             android:label="@string/app_name" >

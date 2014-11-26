@@ -12,7 +12,7 @@ public class PrivacyHelper {
     {
 
         // this numeber represents every how many seconds one must sample the data
-        return samplingFrequency/10.0;
+        return samplingFrequency;
     }
 
     // Function to convert granularity number to something meaningful
