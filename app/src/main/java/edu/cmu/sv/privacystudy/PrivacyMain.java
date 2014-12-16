@@ -15,8 +15,11 @@ public class PrivacyMain extends Activity {
 
     TextView granularity, frequency;
     SeekBar granularitySeek, frequencySeek;
-    Button startServiceButton;
+    Button startServiceButton, stopServiceButton;
     int granularityVal, frequencyVal;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class PrivacyMain extends Activity {
         granularity = (TextView)findViewById(R.id.granularityText);
         frequency = (TextView)findViewById(R.id.freqText);
         startServiceButton = (Button)findViewById(R.id.startService);
+        stopServiceButton = (Button)findViewById(R.id.stopService);
 
 
         final CharSequence freqText = frequency.getText();
@@ -97,6 +101,7 @@ public class PrivacyMain extends Activity {
 
         }
         });
+
 
 
     }

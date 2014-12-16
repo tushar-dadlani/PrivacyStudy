@@ -9,14 +9,27 @@ import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.squareup.okhttp.MediaType;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class SensorDataService extends Service implements SensorEventListener {
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
     final String LOG_TEXT = "SensorDataService";
-
 
     private Sensor accelerometer, gyroscope;
 
     private double samplingFrequency, samplingGranularity;
+
+    ExecutorService executor = Executors.newFixedThreadPool(1000);
+
+
+
+
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent)
@@ -26,6 +39,7 @@ public class SensorDataService extends Service implements SensorEventListener {
         final int type = sensorEvent.sensor.getType();
         float values[] = sensorEvent.values;
         double vals[] = new double[values.length];
+
 
         int rounding = (int)samplingGranularity;
 
@@ -37,15 +51,51 @@ public class SensorDataService extends Service implements SensorEventListener {
 
         switch (type) {
             case Sensor.TYPE_ACCELEROMETER: {
+
+                double total = 0.0;
+                 // replace with a call to Model.predict
+                for(double v : vals)
+                {
+                    total = total + v;
+                }
+                if (total > 5.0)
+                {
+                    System.out.println("Response from app" + "WALK");
+                }
+                else
+                {
+                    System.out.println("Response from app" + "RUN");
+                }
+
+                // end of model predict
+                Features f;
+                f = new Features(vals);
+                Gson gson = new Gson();
+                String json = gson.toJson(f);
+
+                Log.d("Json String", json);
+
+
+
+                Runnable worker = new CustomHttp(json);
+                executor.execute(worker);
+
+
+
+
+
+
                 Log.d(LOG_TEXT, "Accelerometer values " + Double.toString(vals[0]) + " " + Double.toString(vals[1]) + " " + Double.toString(vals[2]));
                 Log.d(LOG_TEXT, "Accelerator Power " + Double.toString(accelerometer.getPower()));
             }
 
+            /*
             case Sensor.TYPE_GYROSCOPE: {
-                Log.d(LOG_TEXT, "Gyropscope values " + Double.toString(vals[0]) + " " + Double.toString(vals[1]) + " " + Double.toString(vals[2]));
+               Log.d(LOG_TEXT, "Gyropscope values " + Double.toString(vals[0]) + " " + Double.toString(vals[1]) + " " + Double.toString(vals[2]));
                 Log.d(LOG_TEXT, "Gyroscope Power " + Double.toString(gyroscope.getPower()));
 
             }
+            */
         }
 
         try {
@@ -91,6 +141,12 @@ public class SensorDataService extends Service implements SensorEventListener {
 
 
         return Service.START_STICKY;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

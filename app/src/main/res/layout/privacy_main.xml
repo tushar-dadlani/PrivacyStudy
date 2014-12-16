@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/granularity"
-        android:max="100"
-        android:progress="60"
+        android:max="10"
+        android:progress="5"
         android:indeterminate="false"
         android:layout_marginTop="102dp"
         android:layout_below="@+id/samplingFreq"
@@ -24,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/samplingFreq"
-        android:progress="4"
+        android:progress="50"
         android:indeterminate="false"
-        android:max="10"
+        android:max="100"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="56dp"
@@ -57,7 +57,17 @@
         android:layout_height="wrap_content"
         android:text="Start Service"
         android:id="@+id/startService"
+        android:layout_marginTop="65dp"
         android:layout_below="@+id/granularity"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="87dp" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Service"
+        android:id="@+id/stopService"
+        android:layout_toEndOf="@+id/startService"
+        android:layout_alignEnd="@+id/startService"
+        android:layout_below="@+id/startService"
+        android:layout_alignStart="@+id/startService" />
 </RelativeLayout>

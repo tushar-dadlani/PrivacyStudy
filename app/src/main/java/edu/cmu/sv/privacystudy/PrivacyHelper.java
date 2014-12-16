@@ -20,7 +20,7 @@ public class PrivacyHelper {
     {
 
         // this number represents up to how many decimal places to capture.
-        return samplingGranularity/10.0;
+        return samplingGranularity;
 
     }
 
